@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #333;
+    transition: 0.3s;
+}
+
+.container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 350px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px auto;
+    display: block;
+    border: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+button {
+    background: #22c55e;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+button:hover {
+    transform: scale(1.03);
+    background: #16a34a;
+}
+
+.subtitle {
+    margin-top: -10px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+h1 {
+    color: #2563eb;
+}
+
+#taskList {
+    list-style: none;
+    padding: 0;
+}
+
+#taskList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 8px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Dark Mode */
+
+.dark-mode {
+    background: #1e1e1e;
+    color: white;
+}
+
+.dark-mode .container {
+    background: #333;
+}
+
+.dark-mode input {
+    background: #555;
+    color: white;
+}
+
+.dark-mode h1 {
+    color: #60a5fa;
+}

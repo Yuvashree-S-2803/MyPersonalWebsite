@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>📝 My To-Do List</h1>
+
+    <p class="subtitle">Manage your daily tasks</p>
+
+    <p id="taskCount">Tasks: 0</p>
+
+    <p id="completedCount">Completed: 0</p>
+
+    <input type="date" id="taskDate">
+
+    <input type="text" id="taskInput" placeholder="Enter a task">
+
+    <button onclick="addTask()">Add Task</button>
+
+    <button onclick="toggleTheme()">🌙 Dark Mode</button>
+	
+	<button onclick="deleteAllTasks()">🗑️ Delete All</button>
+
+    <ul id="taskList"></ul>
+
+</div>
+
+<script>
+
+let completed = 0;
+
+function updateTaskCount() {
+    let count = document.querySelectorAll("#taskList li").length;
+
+    document.getElementById("taskCount").textContent =
+        "Tasks: " + count;
+}
+
+window.onload = function () {
+
+    let savedTasks =
+        JSON.parse(localStorage.getItem("tasks")) || [];
+
+    savedTasks.forEach(function(task) {
+        createTask(task);
+    });
+
+    updateTaskCount();
+};
+
+function addTask() {
+
+    let task =
+        document.getElementById("taskInput").value;
+
+    if (task != "") {
+
+        let tasks =
+            JSON.parse(localStorage.getItem("tasks")) || [];
+
+        tasks.push(task);
+
+        localStorage.setItem(
+            "tasks",
+            JSON.stringify(tasks)
+        );
+
+        createTask(task);
+
+        updateTaskCount();
+
+        document.getElementById("taskInput").value = "";
+    }
+}
+
+function createTask(task) {
+
+    const colors = [
+        "#f7d9f8",
+        "#ffdce7",
+        "#d8f0ff",
+        "#ffeeb5",
+        "#dff5c7"
+    ];
+
+    let li = document.createElement("li");
+
+    li.style.background =
+        colors[Math.floor(Math.random() * colors.length)];
+
+    li.textContent = task;
+
+    let doneBtn = document.createElement("button");
+    doneBtn.textContent = "✓";
+
+    doneBtn.style.width = "30px";
+    doneBtn.style.height = "30px";
+    doneBtn.style.borderRadius = "50%";
+    doneBtn.style.border = "none";
+    doneBtn.style.cursor = "pointer";
+    doneBtn.style.padding = "5px";
+    doneBtn.style.marginLeft = "10px";
+
+    doneBtn.onclick = function() {
+
+        completed++;
+
+        document.getElementById("completedCount").textContent =
+            "Completed: " + completed;
+
+        li.style.textDecoration = "line-through";
+        li.style.color = "green";
+
+        doneBtn.style.display = "none";
+    };
+
+    let deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+
+    deleteBtn.style.width = "70px";
+    deleteBtn.style.padding = "6px";
+    deleteBtn.style.border = "none";
+    deleteBtn.style.borderRadius = "10px";
+    deleteBtn.style.cursor = "pointer";
+    deleteBtn.style.marginLeft = "10px";
+
+    deleteBtn.onclick = function() {
+
+        let tasks =
+            JSON.parse(localStorage.getItem("tasks")) || [];
+
+        tasks = tasks.filter(t => t !== task);
+
+        localStorage.setItem(
+            "tasks",
+            JSON.stringify(tasks)
+        );
+
+        li.remove();
+
+        updateTaskCount();
+    };
+
+    li.appendChild(doneBtn);
+    li.appendChild(deleteBtn);
+
+    document.getElementById("taskList").appendChild(li);
+}
+
+function deleteAllTasks() {
+
+	    if(confirm("Delete all tasks?")) {
+
+	        localStorage.removeItem("tasks");
+
+	        document.getElementById("taskList").innerHTML = "";
+
+	        completed = 0;
+
+	        document.getElementById("completedCount").textContent =
+	            "Completed: 0";
+
+	        updateTaskCount();
+	    }
+	}
+
+function toggleTheme() {
+    document.body.classList.toggle("dark-mode");
+}
+
+</script>
+
+</body>
+</html>
